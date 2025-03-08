@@ -1,36 +1,35 @@
 'use client'
-
 import { useState, useEffect } from 'react'
 
-export default function Page() {
-  const [posts, setPosts] = useState(null);
+export default function ProductsPage() {
+  const [products, setProducts] = useState(null);
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
-    async function getPosts() {
+    async function getProducts() {
       try {
-        const resp = await fetch('https://jsonplaceholder.typicode.com/posts/');
-        console.log(`Response from \'jsonplaceholder.typicode.com\': ${resp.status}`);
+        const resp = await fetch('/api/products');
+        console.log(`HTTP Code from productapi: ${resp.status}`);
         const data = await resp.json();
         console.log(`Data Length: ${data.length}`);
-        setPosts(data);
+        setProducts(data);
         setLoading(false);
       } catch({ name, message }) {
         console.log(`Error Caught. Name: ${name}, Message: ${message}`);
         setLoading(true);
       }
     };
-    getPosts();
+    getProducts();
   }, []);
 
   return (
     <div>
-      <p>Grabbing API post data.</p>
+      <p>Grabbing API product data.</p>
       {isLoading !== true ? <p>Loaded.</p> : <p>Loading...</p>}
       {isLoading !== true ?
         <ul>
-          {posts.map((post) => (
-            <li key={post.id}>Title: <b>{post.title}</b></li>
+          {products.map((product) => (
+            <li key={product.productid}><b>{product.title}</b><br />{product.description}<br />{product.price}</li>
           ))}
         </ul>
     : <p></p>}
