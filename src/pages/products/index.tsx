@@ -1,24 +1,26 @@
 'use client'
-import { useState, useEffect } from 'react'
+
+import { useState, useEffect } from 'react';
+
+import { ProductSquare } from './productsquare.tsx';
 
 export default function ProductsPage() {
   const [products, setProducts] = useState(null);
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
-    async function getProducts() {
+    async function getProducts(){
+      setProducts(null);
+      setLoading(true);
       try {
-        const resp = await fetch('/api/products');
-        console.log(`HTTP Code from productapi: ${resp.status}`);
+        const resp = await fetch('/api/products', { signal: AbortSignal.timeout(4000) });
         const data = await resp.json();
-        console.log(`Data Length: ${data.length}`);
         setProducts(data);
         setLoading(false);
       } catch({ name, message }) {
-        console.log(`Error Caught. Name: ${name}, Message: ${message}`);
         setLoading(true);
       }
-    };
+    }
     getProducts();
   }, []);
 
@@ -29,7 +31,7 @@ export default function ProductsPage() {
       {isLoading !== true ?
         <ul>
           {products.map((product) => (
-            <li key={product.productid}><b>{product.title}</b><br />{product.description}<br />{product.price}</li>
+            <ProductSquare {...product} />
           ))}
         </ul>
     : <p></p>}

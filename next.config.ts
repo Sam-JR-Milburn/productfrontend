@@ -15,4 +15,18 @@ const nextConfig: NextConfig = {
   }
 };
 
+// Allow <Image /> to take remote sources.
+module.exports = {
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'raw.githubusercontent.com',
+        port: '',
+        pathname: '/Sam-JR-Milburn/**',
+      },
+    ],
+  },
+}
+
 export default nextConfig;
