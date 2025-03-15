@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 
-import { ProductSquare } from './productsquare.tsx';
+import { ProductCatalog } from './productsquare.tsx';
 
 export default function ProductsPage() {
   const [products, setProducts] = useState(null);
@@ -29,12 +29,7 @@ export default function ProductsPage() {
       <p>Grabbing API product data.</p>
       {isLoading !== true ? <p>Loaded.</p> : <p>Loading...</p>}
       {isLoading !== true ?
-        <ul>
-          {products.map((product) => (
-            <ProductSquare {...product} />
-          ))}
-        </ul>
-    : <p></p>}
+        <ProductCatalog productarray={products} /> : <p>...</p>}
     </div>
   );
 }
