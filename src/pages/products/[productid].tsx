@@ -3,34 +3,38 @@
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 
-import { FullProductSquare } from './productsquare.tsx';
+import { Product, getProducts, FullProductSquare } from './productsquare.tsx';
 
 export default function ProductPage() {
   const router = useRouter();
   const { productid } = router.query;
   let fetchurl: string = "/api/products/"+productid;
-  console.log(fetchurl);
 
   const [product, setProduct] = useState(null);
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
-    async function getProduct(){
+    async function assignProduct(){
       try {
-        const resp = await fetch(fetchurl, { signal: AbortSignal.timeout(4000) });
-        const data = await resp.json();
-        setProduct(data);
+        const fetchedProducts: Product[] = await getProducts(fetchurl);
+        /* Though this is an array, the json conversion will yield an object */
+        console.log(`${fetchurl}`);
+        console.log(`Undefined? ${fetchedProducts.length}`);
+        if(fetchedProducts.length !== 1){
+          throw new Error(`This should return one (1) product at url: ${fetchurl}`);
+        }
+        setProduct(fetchedProducts[0]);
         setLoading(false);
-      } catch({ name, message }) {
+      } catch(error) {
+        console.log(error);
         setLoading(true);
       }
     }
-    getProduct();
+    assignProduct();
   }, []);
 
   return (
     <>
-      {isLoading !== true ? <p>Loaded.</p> : <p>Loading...</p>}
       {isLoading !== true ? <FullProductSquare {...product} /> : <p></p>}
     </>
   );

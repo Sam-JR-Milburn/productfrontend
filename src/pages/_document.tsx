@@ -3,11 +3,11 @@ import Link from 'next/link';
 import Image from 'next/image';
 
 function MightyOrangutanLogo(){
-  const orangutan: string = "https://raw.githubusercontent.com/Sam-JR-Milburn/productapi/refs/heads/main/images/orangutan.png";
+  const orangutan: string = "https://raw.githubusercontent.com/Sam-JR-Milburn/productapi/refs/heads/main/images/orangutan-border.png";
   return (
     <div id="logolink">
       <Link href="/products">
-        <Image src={orangutan} width={60} height={60} alt="MightyOrangutan"/>
+        <Image src={orangutan} width={100} height={100} alt="MightyOrangutan"/>
         <h1>MightyOrangutan</h1>
       </Link>
     </div>

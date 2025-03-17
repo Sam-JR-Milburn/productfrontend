@@ -1,9 +1,19 @@
 /* @import "tailwindcss"; */
 
+:root {
+  --charcoal: #1E201E;
+  --lightcoal: #3C3D37;
+  --washedolive: #697565;
+  --bonecream: #ECDFCC;
+  --mightyorangutan: #9e512b;
+}
+
 /* */
 body {
   /* background-color: red; */
   font-family: 'Helvetica', 'Arial', sans-serif;
+  background-color: var(--charcoal);
+  color: var(--bonecream);
 }
 
 /* For MightyOrangutanLogo and PageHeader [_document.tsx] */
@@ -21,13 +31,13 @@ body {
 }
 
 #logolink h1 {
-  color: #9e512b;
+  color: var(--bonecream);
 }
 
 #trolleybutton {
   width: 25%;
   height: 100%;
-  background-color: green;
+  background-color: var(--washedolive);
   color: white;
 
   display: flex;
@@ -42,7 +52,7 @@ body {
 }
 
 #pageheader {
-  border: 1px solid purple; /* DEBUG */
+  /* border: 1px solid purple; */ /* DEBUG */
   padding-top: 20px;
 
   width: 100%;
@@ -51,59 +61,64 @@ body {
   flex-direction: row;
   justify-content: space-between;
 
+  padding-bottom: 100px;
 }
 
 /* For ProductSquare [productsquare.tsx]: products (with picture, title, price) seen in catalogues (or search results?) */
-.productsquare:hover {
-  border: 1px solid red;
-  transform: scale(1.05);
-  width: 25%;
-}
-
 .productsquare {
-  max-width: 50%;
   width: 25%;
-  transform-origin: 50% 50%;
-  transition: transform 0.4s ease;
+  height: auto;
 
-  border: 1px solid purple; /* DEBUG */
+  float: left;
+  position: relative;
+  overflow: hidden;
+
+  background-color: var(--lightcoal);
 }
+
 .productsquare img {
   width: 100%;
   height: auto;
+  max-width: 100%;
+  max-height: auto;
+  aspect-ratio: 1/1;
+
+  transform-origin: 50% 50%;
+  transition: transform 0.4s ease-in;
+}
+
+.zoom {
+  font-size: 0; /* Introduces a minimum amount of whitespace where the img can expand */
+  overflow: hidden; /* Image needs to be contained within a div (.zoom classed) to stay within borders.*/
+}
+
+.productsquare:hover img {
+  transform: scale(1.05);
 }
 
 .outerproducttext {
   padding-left: 2%;
   padding-right: 2%;
+
+  /* Display title and price as separated and near each end */
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+
+  font-size: math;
+
 }
 
-/* */
+/* For ProductCatalog: --- */
 .productcatalog {
+  /* Display squares in rows */
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

@@ -2,32 +2,31 @@
 
 import { useState, useEffect } from 'react';
 
-import { ProductCatalog } from './productsquare.tsx';
+import { Product, getProducts, ProductCatalog } from './productsquare.tsx';
+
 
 export default function ProductsPage() {
-  const [products, setProducts] = useState(null);
+  const [products, setProducts] = useState<Product[]>([]) // Empty array
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
-    async function getProducts(){
-      setProducts(null);
-      setLoading(true);
+    async function assignProducts() {
       try {
-        const resp = await fetch('/api/products', { signal: AbortSignal.timeout(4000) });
-        const data = await resp.json();
-        setProducts(data);
+        const fetchedProducts: Product[] = await getProducts('/api/products');
+        setProducts(fetchedProducts);
+      } catch(error) {
+        /* Log issue? */
+        setProducts([]);
+      } finally {
         setLoading(false);
-      } catch({ name, message }) {
-        setLoading(true);
       }
     }
-    getProducts();
+    /* Explicitly call once per page-load. */
+    assignProducts();
   }, []);
 
   return (
     <div>
-      <p>Grabbing API product data.</p>
-      {isLoading !== true ? <p>Loaded.</p> : <p>Loading...</p>}
       {isLoading !== true ?
         <ProductCatalog productarray={products} /> : <p>...</p>}
     </div>

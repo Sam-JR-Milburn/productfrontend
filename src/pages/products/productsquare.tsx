@@ -4,11 +4,31 @@ import Link from 'next/link';
 
 import { getPriceString } from '../../lib/misc.ts';
 
-export function ProductSquare(product){
+export interface Product {
+  productid: number;
+  title: string;
+  description: string;
+  imageurl: string;
+  price: float;
+}
+
+/* getProducts: Grab products in a strongly typed way from the web API. */
+export async function getProducts(url: string): Promise<Product[]> {
+  const resp = await fetch(url); // '/api/products' or '/api/products/[numberhere]'
+  if(!resp.ok) {
+    throw new Error(`Error from product api: ${resp.status}`);
+  }
+  const data: Product[] = await resp.json();
+  return data;
+}
+
+export function ProductSquare(product: Product){
   return (
-    <div class="product productsquare">
-      <Link href={"/products/"+product.productid}><Image src={product.imageurl} width={300} height={300} alt={product.title} /></Link>
-      <div class="outerproducttext">
+    <div className={"productsquare"}>
+      <div className={"zoom"}>
+        <Link href={"/products/"+product.productid}><Image src={product.imageurl} width={300} height={300} alt={product.title} /></Link>
+      </div>
+      <div className={"outerproducttext"}>
         <p><b>{product.title}</b></p>
         <p><b>{getPriceString(product.price)}</b></p>
       </div>
@@ -16,9 +36,9 @@ export function ProductSquare(product){
   );
 }
 
-export function FullProductSquare(product){
+export function FullProductSquare(product: Product){
   return (
-    <div class="product fullproductsquare">
+    <div className={"fullproductsquare"}>
       <Link href={"/products/"+product.productid}><Image src={product.imageurl} width={300} height={300} alt={product.title} /></Link>
       <div>
         <p><b>{product.title}</b></p>
@@ -31,9 +51,9 @@ export function FullProductSquare(product){
 
 export function ProductCatalog(props){
   return (
-    <div class="productcatalog">
+    <div className={"productcatalog"}>
       {props.productarray.map((product) => (
-        <ProductSquare {...product} />
+        <ProductSquare {...product} key={product.productid} />
       ))}
     </div>
   );
