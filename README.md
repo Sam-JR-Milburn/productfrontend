@@ -1,4 +1,7 @@
-This is a Next.js + React + TypeScript + HTML/CSS portfolio project. The intent is to deploy a toy commerce site using a dedicated API at https://github.com/Sam-JR-Milburn/productapi.
+This is a Next.js + React + TypeScript + HTML/CSS portfolio project. The intent is to deploy a toy ecommerce site using a dedicated API at https://github.com/Sam-JR-Milburn/productapi.
+
+## Demonstration 
+[![Initial Demonstration](https://img.youtube.com/vi/PYNFa0iG58c/hqdefault.jpg)](https://www.youtube.com/watch?v=PYNFa0iG58c)
 
 ## How do I run?
 
